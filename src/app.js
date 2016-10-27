@@ -6,6 +6,7 @@ import { Router, browserHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
 
 import configureStore from './store/configureStore';
+import createReducer from './utils/createReducer';
 import i18n from './i18n';
 
 import modal from './reducers/modal'
@@ -14,6 +15,7 @@ export default class App {
 
   constructor(config) {
     this.config = config || {}
+    this._model = []
   }
 
   set routes(routes) {
@@ -26,6 +28,9 @@ export default class App {
 
   set middlewares(middlewares) {
     this._middlewares = middlewares
+  }
+  set model(model) {
+    this._model = model
   }
 
   fetchLocalePromise(needsI18n, userLocale, defaultLocale) {
@@ -41,10 +46,14 @@ export default class App {
 
   createRootComponent({locale, localeData}) {
 
-    const reducers = {
+    let reducers = {
       modal,
       ...this._reducers
     }
+    this._model.reduce(function (prev,curr) {
+      const {namespace,state,reducer} = curr;
+      prev[namespace]= createReducer(state,reducer)
+    },reducers)
 
     const initialState = window.__INITIAL_STATE__ || {};
     const store = configureStore(reducers, initialState, this._middlewares)
