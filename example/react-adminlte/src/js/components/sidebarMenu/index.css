@@ -1,0 +1,3 @@
+.sidebar-menu li.active > a > .pull-right-container > .fa-angle-left {
+	transform: rotate(-90deg);
+}
