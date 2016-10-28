@@ -1,20 +1,23 @@
 import React from 'react';
-import ApiClient from './js/helpers/ApiClient';
 import routes from './js/routes';
-
 import { App } from '../../../lib/index'
-import createMiddleware from './js/redux/middleware/clientMiddleware';
-import reducer  from './js/redux/modules/reducer';
-import menus2  from './js/redux/modules/menus2';
+import reducer,{models}  from './js/redux/modules/reducer';
 
-
-
-const client = new ApiClient();
+console.info()
 const app = new App({})
 
 app.routes = routes
 app.reducers = reducer
-app.model = [menus2]
-app.middlewares = [createMiddleware(client)]
+app.model = models
 
 app.render( document.getElementById('react-view') )
+
+if (module.hot) {
+	module.hot.accept('./js/routes/index', () => {
+		app.render( document.getElementById('react-view') )
+	});
+	module.hot.accept('./js/redux/modules/reducer', () => {
+		const nextReducer = require('./js/redux/modules/reducer')
+		app.replaceReducer(nextReducer.default,nextReducer.models)
+	});
+}
