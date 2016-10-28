@@ -9,9 +9,9 @@ export default [
 		icon: 'fa-link',
 		title: 'Dashboard',
 	},{
-		path: '/dashboard',
+		path: '/todoPage',
 		icon: 'fa-link',
-		title: 'Dashboard',
+		title: 'todoDemo',
 	},
 	{
 		path: '/inbox',

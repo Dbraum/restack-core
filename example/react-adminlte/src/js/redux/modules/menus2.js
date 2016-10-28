@@ -1,12 +1,10 @@
-import menus from '../../routes/menu'
-
-
 export default {
-	namespace:'menus2',
-	state:menus,
-	reducer:{
-		addMenu(state,action){
-			return state.concat(action.payload)
+	namespace: 'MY_REDUCER',
+	state: [],
+	effects: {
+		*addItemWithSaga({ payload: item }, { put }) {
+			yield put({ type: 'MY_REDUCER/saveItem', payload: state=>[...state,item] });
 		}
-	}
+	},
+
 }
