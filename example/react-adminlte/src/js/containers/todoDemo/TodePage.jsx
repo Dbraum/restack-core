@@ -25,7 +25,7 @@ export default class MenuDemo extends Component {
 			<div className="box-header">
 				<h3 className="box-title">todo demo</h3>
 			</div>
-			<div className="box-body" style={{minHeight:300}}>
+			<div className="box-body" style={{minHeight:300,maxHeight:450,overflow:'auto'}}>
 				<ul className="nav nav-stacked">
 					{this.props.todos.map((item,index)=><Item text={item} key={index}
 					                                          index={index} removeItem={this.removeItem}/>)}
@@ -56,26 +56,10 @@ export default class MenuDemo extends Component {
 
 function Item({text,removeItem,index}) {
 	return <li>
-		<a href="#" onClick={event => {removeItem(index)}}>{text} <span className="pull-right badge bg-red">X</span></a>
+		<a href="#" onClick={event => {removeItem(index)}}>
+			<span className="pull-left">{index} |</span>
+			<span style={{padding:'0px 15px'}}>{text}</span>
+			<span className="pull-right badge bg-red">X</span></a>
 	</li>
-
-}
-
-
-function updateName(newName) {
-	return {
-		type: 'MY_REDUCER/UPDATE_NAME',
-		payload: function (state) {
-			console.info(state)
-			return [].concat(state, [newName])
-		}
-	};
-}
-
-function updateNameWithSaga(newName) {
-	return {
-		type: 'addItemWithSaga',
-		payload: newName
-	};
 }
 

@@ -2,7 +2,7 @@ import u from 'updeep'
 
 export default {
 	namespace: 'todos',
-	state: ['fasdf','1','fsadfas','fasdf'],
+	state: [],
 	effects: {
 		*addTodoItem({ payload: item }, { put }) {
 			yield put({ type: 'todos/addItem', payload: state=>[...state,item] });
@@ -12,6 +12,7 @@ export default {
 				return index === itemIndex
 			}) });
 		}
+
 	},
 
 }
