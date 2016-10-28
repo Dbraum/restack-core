@@ -27,8 +27,8 @@ export default class MenuDemo extends Component {
 			</div>
 			<div className="box-body" style={{minHeight:300,maxHeight:450,overflow:'auto'}}>
 				<ul className="nav nav-stacked">
-					{this.props.todos.map((item,index)=><Item text={item} key={index}
-					                                          index={index} removeItem={this.removeItem}/>)}
+					{this.props.todos.map((item, index)=><Item text={item} key={index}
+					                                           index={index} removeItem={this.removeItem}/>)}
 				</ul>
 			</div>
 
@@ -39,27 +39,33 @@ export default class MenuDemo extends Component {
 	}
 
 
-	addItem = (item) =>{
+	addItem = (item) => {
 		this.props.dispatch({
-			type:'addTodoItem',
-			payload:item
+			type: 'addTodoItem',
+			payload: item
 		})
 	}
 
-	removeItem = (index)=>{
+	removeItem = (index)=> {
 		this.props.dispatch({
-			type:'removeTodoItem',
-			payload:index
+			type: 'removeTodoItem',
+			payload: index
 		})
 	}
 }
 
-function Item({text,removeItem,index}) {
+function Item({text, removeItem, index}) {
+	function handleClick(event) {
+		event.preventDefault();
+		removeItem(index)
+	}
+
 	return <li>
-		<a href="#" onClick={event => {removeItem(index)}}>
+		<a href="#" onClick={handleClick}>
 			<span className="pull-left">{index} |</span>
 			<span style={{padding:'0px 15px'}}>{text}</span>
-			<span className="pull-right badge bg-red">X</span></a>
+			<span className="pull-right badge bg-red">X</span>
+		</a>
 	</li>
 }
 
