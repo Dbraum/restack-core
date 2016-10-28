@@ -4,17 +4,36 @@ import * as sagaEffects from 'redux-saga/effects';
 import { takeEvery, takeLatest } from 'redux-saga/lib/internal/sagaHelpers';
 
 const SEP = '/';
+export const CANCEL_SAGAS_HMR = 'CANCEL_SAGAS_HMR';
 
 
 export default function createSaga(effects, model) {
 	return function *() {
 		for (let key in effects) {
 			const watcher = getWatcher(key, effects[key], model);
-			yield sagaEffects.fork(watcher);
+			yield sagaEffects.fork(createAbortableSaga(watcher));
 		}
 	}
 }
 
+
+function createAbortableSaga(saga) {
+	if (process.env.NODE_ENV === 'production') {
+		return saga;
+	} else {
+		return function* main () {
+			const sagaTask = yield sagaEffects.fork(saga);
+			yield sagaEffects.take(CANCEL_SAGAS_HMR);
+			yield sagaEffects.cancel(sagaTask);
+		};
+	}
+}
+
+export function cancelSagas(store) {
+	store.dispatch({
+		type: CANCEL_SAGAS_HMR
+	});
+}
 
 function getWatcher(key,_effect,model) {
 	let effect = _effect;

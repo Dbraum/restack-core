@@ -11,7 +11,7 @@ import i18n from './i18n';
 import modal from './reducers/modal'
 import invariant from 'invariant';
 import createReducer from 'redux-updeep';
-import createSaga from './utils/createSaga';
+import createSaga,{cancelSagas} from './utils/createSaga';
 
 export default class App {
 
@@ -57,7 +57,11 @@ export default class App {
 			reducers[namespace] = createReducer(namespace, state);
 			if (effects) sagas.push(createSaga(m.effects, m));
 		}
+		cancelSagas(this.store)
+
 		this.store.hotReplaceReducer(reducers)
+		// start saga
+		sagas.forEach(this.store.run);
 	}
 
 	createRootComponent({locale, localeData}) {
