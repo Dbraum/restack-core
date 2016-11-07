@@ -41,7 +41,7 @@ export default class MenuDemo extends Component {
 
 	addItem = (item) => {
 		this.props.dispatch({
-			type: 'addTodoItem',
+			type: 'addTodoItem2',
 			payload: item
 		})
 	}

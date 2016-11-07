@@ -1,9 +1,8 @@
 import React from 'react';
 import routes from './js/routes';
 import { App } from '../../../lib/index'
-import reducer,{models}  from './js/redux/modules/reducer';
+import reducer,{models}  from './js/redux';
 
-console.info()
 const app = new App({})
 
 app.routes = routes
@@ -16,8 +15,8 @@ if (module.hot) {
 	module.hot.accept('./js/routes/index', () => {
 		app.render( document.getElementById('react-view') )
 	});
-	module.hot.accept('./js/redux/modules/reducer', () => {
-		const nextReducer = require('./js/redux/modules/reducer')
+	module.hot.accept('./js/redux', () => {
+		const nextReducer = require('./js/redux')
 		app.replaceReducer(nextReducer.default,nextReducer.models)
 	});
 }

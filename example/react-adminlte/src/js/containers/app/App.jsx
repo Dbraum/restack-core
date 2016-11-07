@@ -6,7 +6,6 @@ import Layout from '../../components/Layout'
 
 @connect(
 	state => {
-		console.info(state)
 		return {
 			menus: state.menus
 		}
