@@ -15,7 +15,8 @@ export default {
 		addTodoItem,
 		*addTodoItem2({ payload: item }, { put,call}) {
 			//或者可以这样调用，两种调用方式没区别  yield addTodoItem(...arguments)
-			yield call(addTodoItem,{ payload: 1 }, { put,call }) 
+			   yield call(addTodoItem,{ payload: 1 }, { put,call }) 
+			//yield put({type:'addTodoItem',payload:item})
 			yield put({ type: 'todos/addItem', payload: state=>[...state,item] });
 		},
 		*removeTodoItem({ payload: itemIndex }, { put }) {
