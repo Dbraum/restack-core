@@ -1,4 +1,4 @@
-import React from 'React'
+import React from 'react'
 
 import Logo from './Logo'
 import SidebarToggle from './SidebarToggle'

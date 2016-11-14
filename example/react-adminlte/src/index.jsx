@@ -1,6 +1,6 @@
 import React from 'react';
 import routes from './js/routes';
-import { App } from '../../../lib/index'
+import { App } from 'restack-core'
 import reducer,{models}  from './js/redux';
 
 const app = new App({})

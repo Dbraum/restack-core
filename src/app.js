@@ -10,7 +10,7 @@ import i18n from './i18n';
 
 import modal from './reducers/modal'
 import invariant from 'invariant';
-import createReducer from 'redux-updeep';
+import createReducer from './utils/createReducer';
 import createSaga,{cancelSagas} from './utils/createSaga';
 
 export default class App {
@@ -53,8 +53,9 @@ export default class App {
 			...nextReducers
 		}, sagas = [];
 		for (let m of models) {
-			const {namespace, state, effects} = m;
-			reducers[namespace] = createReducer(namespace, state);
+			const {namespace, state, effects,reducers} = m;
+
+			reducers[namespace] = createReducer(namespace, state,reducers);
 			if (effects) sagas.push(createSaga(m.effects, m));
 		}
 		cancelSagas(this.store)
@@ -74,10 +75,11 @@ export default class App {
 
 
 		for (let m of this._model) {
-			const {namespace, state, effects} = m;
-			reducers[namespace] = createReducer(namespace, state);
+			const {namespace, state, effects,reducer} = m;
+			reducers[namespace] = createReducer(namespace, state,reducer);
 			if (effects) sagas.push(createSaga(m.effects, m));
 		}
+		
 
 
 		// create store

@@ -69,3 +69,4 @@ function Item({text, removeItem, index}) {
 	</li>
 }
 
+

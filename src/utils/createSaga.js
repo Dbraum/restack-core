@@ -93,6 +93,8 @@ function prefixType(type, model) {
 	return type;
 }
 
+
+
 function createEffects(model) {
 	function put(action) {
 		const { type } = action;
@@ -103,5 +105,12 @@ function createEffects(model) {
 		);*/
 		return sagaEffects.put({ ...action, type: prefixType(type, model) });
 	}
-	return { ...sagaEffects, put };
+	function* update({path,payload}) {
+		return yield put({
+			type:`${model.namespace}/defaultReducer`,
+			payload,
+			path
+		})
+	}
+	return { ...sagaEffects, put,update };
 }

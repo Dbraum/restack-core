@@ -5,12 +5,14 @@ import {
 	App,
 	NotFound,
 	TodePage,
+	DatatableDemoPage,
 } from './../containers';
 
 export default <Route path="/" component={App}>
 	<IndexRoute component={Dashboard}/>
 	<Route path="about" component={About}/>
 	<Route path="todoPage" component={TodePage}/>
+	<Route path="datatableDemoPage" component={DatatableDemoPage}/>
 	<Route path="dashboard" component={Dashboard}/>
 	<Route path="inbox" component={Inbox}>
 		<Route path="messages/:id" component={Message}/>
