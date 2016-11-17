@@ -1,5 +1,4 @@
 import u from 'updeep'
-import get from 'lodash/get';
 
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms))
 

@@ -12,7 +12,7 @@ import modal from './reducers/modal'
 import invariant from 'invariant';
 import createReducer from './utils/createReducer';
 import createSaga,{cancelSagas} from './utils/createSaga';
-
+import _ from 'lodash'
 export default class App {
 
 	constructor(config) {
@@ -52,12 +52,14 @@ export default class App {
 			modal,
 			...nextReducers
 		}, sagas = [];
-		for (let m of models) {
-			const {namespace, state, effects,reducers} = m;
 
-			reducers[namespace] = createReducer(namespace, state,reducers);
-			if (effects) sagas.push(createSaga(m.effects, m));
-		}
+		_.forEach(models,model=>{
+			const {namespace, state, effects} = model;
+
+			reducers[namespace] = createReducer(namespace, state,model.reducers);
+			if (effects) sagas.push(createSaga(effects, model));
+		})
+
 		cancelSagas(this.store)
 
 		this.store.hotReplaceReducer(reducers)
@@ -67,18 +69,20 @@ export default class App {
 
 	createRootComponent({locale, localeData}) {
 
-		let reducers = {
+		const reducers = {
 			modal,
 			...this._reducers
 		}
-		let sagas = []
+		const sagas = []
 
 
-		for (let m of this._model) {
-			const {namespace, state, effects,reducer} = m;
-			reducers[namespace] = createReducer(namespace, state,reducer);
-			if (effects) sagas.push(createSaga(m.effects, m));
-		}
+
+		_.forEach(this._model,model=>{
+			const {namespace, state, effects} = model;
+
+			reducers[namespace] = createReducer(namespace, state,model.reducers);
+			if (effects) sagas.push(createSaga(effects, model));
+		})
 		
 
 

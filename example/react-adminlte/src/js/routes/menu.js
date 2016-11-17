@@ -15,10 +15,6 @@ export default [
 		path: '/todoPage',
 		icon: 'fa-link',
 		title: 'todoDemo',
-	},{
-		path: '/datatableDemoPage',
-		icon: 'fa-link',
-		title: 'datatableDemo',
 	},
 	{
 		path: '/inbox',
